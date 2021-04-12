@@ -14,6 +14,22 @@ const randomFunc = {
 	symbol: getRandomSymbol,
 };
 
+clipboardEl.addEventListener('click', () => {
+	const textarea = document.createElement('textarea');
+	const password = resultEl.innerText;
+
+	if (!password) {
+		return;
+	}
+
+	textarea.value = password;
+	document.body.appendChild(textarea);
+	textarea.select();
+	document.execCommand('copy');
+	textarea.remove();
+	alert('Password has been copied to the clipboard!');
+});
+
 generateEl.addEventListener('click', () => {
 	const length = +lengthEl.value; // Convert from string to number with + sign
 	const hasLower = lowercaseEl.checked;
@@ -34,8 +50,9 @@ function generatePassword(lower, upper, number, symbol, length) {
 	let generatedPassword = '';
 	const typesCount = lower + upper + number + symbol;
 	const typesArray = [{ lower }, { upper }, { number }, { symbol }].filter(
-		(item) => Object.values(item)[0]);
-    
+		(item) => Object.values(item)[0]
+	);
+
 	if (typesCount === 0) {
 		return '';
 	}
